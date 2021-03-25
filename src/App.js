@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, Box } from '@material-ui/core';
 import { Home } from './Home'
+import { Header } from './Header';
+import { SideMenu } from './SideMenu';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true)
-
 
   const theme = createMuiTheme({
     spacing: 8,
@@ -18,7 +19,7 @@ function App() {
       },
       background: {
         default: darkMode ? '#232323' : '#FFF',
-        dark: darkMode ? '#181818': '#f4f6f8',
+        dark: darkMode ? '#181818' : '#f4f6f8',
         paper: darkMode ? '#232323' : '#FFF'
       }
     },
@@ -26,7 +27,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Home darkMode={darkMode} setDarkMode = {setDarkMode} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Box display='flex'>
+        <SideMenu />
+        <Home />
+      </Box>
     </ThemeProvider>
   );
 }
