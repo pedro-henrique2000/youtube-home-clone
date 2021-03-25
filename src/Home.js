@@ -7,19 +7,17 @@ import videos from './data/videos.json'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '100vh',
+        minHeight: '100vh',
         backgroundColor: theme.palette.background.dark,
     }
 }))
 
 export function Home() {
-
     const classes = useStyles()
 
     return (
         <div className={classes.root}>
             <Box display='flex'>
-                
                 <Box p={8}>
                     <Toolbar />
                     <Typography variant='h5' color='textPrimary' style={{ fontWeight: 800 }}>

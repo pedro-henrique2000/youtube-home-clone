@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    makeStyles, AppBar, Toolbar, IconButton, Button, useTheme, Switch
+    makeStyles, AppBar, Toolbar, IconButton, Button, useTheme, Switch, Hidden, useMediaQuery
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -10,7 +10,7 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import AppsIcon from '@material-ui/icons/Apps';
 
 const useStyles = makeStyles((theme) => ({
-    
+
     appBar: {
         boxShadow: 'none',
         zIndex: theme.zIndex.drawer + 1,
@@ -30,32 +30,41 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export function Header({darkMode, setDarkMode}) {
+export function Header({ darkMode, setDarkMode }) {
     const classes = useStyles()
     const theme = useTheme()
 
-    return(
+    const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("xs"));
+    const buttonProps = {
+        variant: isSmallScreen ? "text" : "outlined",
+        size: isSmallScreen ? "small" : "large",
+        startIcon: isSmallScreen ? '' : <AccountCircleIcon />
+    };
+
+    return (
         <AppBar color='inherit' className={classes.appBar}>
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuIcon} aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
+            <Toolbar>
+                <IconButton edge="start" className={classes.menuIcon} aria-label="menu">
+                    <MenuIcon />
+                </IconButton>
+                <Hidden mdDown>
                     <img src={theme.palette.type === 'dark' ? "/images/branco.png" : "/images/preto.png"} alt="logo" className={classes.logo} />
-                    <div className={classes.grow} />
+                </Hidden>
+                <div className={classes.grow} />
 
-                    <Switch value={darkMode} onChange={() => setDarkMode(!darkMode)}/>
+                <Switch value={darkMode} onChange={() => setDarkMode(!darkMode)} />
 
-                    <IconButton edge="start" className={classes.icons}>
-                        <VideoCallIcon />
-                    </IconButton>
-                    <IconButton edge="start" className={classes.icons}>
-                        <AppsIcon />
-                    </IconButton>
-                    <IconButton edge="start" className={classes.icons}>
-                        <NotificationsIcon />
-                    </IconButton>
-                    <Button startIcon={<AccountCircleIcon />} variant='outlined' color="secondary">Fazer Login</Button>
-                </Toolbar>
-            </AppBar>
+                <IconButton edge="start" className={classes.icons}>
+                    <VideoCallIcon />
+                </IconButton>
+                <IconButton edge="start" className={classes.icons}>
+                    <AppsIcon />
+                </IconButton>
+                <IconButton edge="start" className={classes.icons}>
+                    <NotificationsIcon />
+                </IconButton>
+                <Button startIcon={<AccountCircleIcon />} variant='outlined' {...buttonProps} color="secondary">Fazer Login</Button>
+            </Toolbar>
+        </AppBar>
     )
 }
